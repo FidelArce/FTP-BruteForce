@@ -55,10 +55,10 @@ def main():
         passwords = get_passwd_wordlist()
         
     widgets = [
-        'Progress: ',                                # Description text
-        progressbar.Percentage(),         # Show percentage completed
+        'Progress: ',
+        progressbar.Percentage(),
         ' ',                              
-        progressbar.Bar(marker=':'),      # Custom bar with specified marker
+        progressbar.Bar(marker=':'),
         ' ',
         progressbar.ETA(),                    # Estimated time remaining
         ' | ',
