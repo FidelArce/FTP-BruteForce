@@ -62,23 +62,30 @@ def main():
         ' ',
         progressbar.ETA(),                    # Estimated time remaining
         ' | ',
-        progressbar.Counter('%(value)d/' + str(len(users) * len(passwords))),
+        progressbar.Counter('%d/' + str(len(users) * len(passwords))),
         ' || ',
         progressbar.Timer(),                  # Time elapsed
     ]
     
     try:
         bar = progressbar.ProgressBar(widgets=widgets, max_value=len(users) * len(passwords))
-    except:
+    except TypeError:
         bar = progressbar.ProgressBar(widgets=widgets, maxval=len(users) * len(passwords))
-    bar.start()
-    count = 0
     
+    bar = bar.start()
+    
+    def update_bar(value):
+        try:
+            bar.update(value)
+        except AttributeError:
+            bar(value)
+    
+    count = 0
     exit_for = False
     for possible_username in users:
         for possible_passwd in passwords:
             count += 1
-            bar.update(count)
+            update_bar(count)
             time.sleep(0.00007)
             
             if ftp_attack(ip, possible_username, possible_passwd):
@@ -87,6 +94,11 @@ def main():
                 break
         if exit_for:
             break
+    
+    try:
+        bar.finish()
+    except Exception:
+        pass
 
 
 if __name__ == '__main__':
