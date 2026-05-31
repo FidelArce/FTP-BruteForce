@@ -15,7 +15,7 @@ def get_usernames_wordlist():
         users = users.read().split('\n')
         
     return users
-        
+
 def get_passwd_wordlist():
     try:
         passwords = open('passwords.txt', 'r')
